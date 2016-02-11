@@ -6,13 +6,13 @@
 title: Walter Nascimento - WebDeveloper
 subtitle:
 description:
-author: Walter Nascimento Barroso
+author: Walter Nascimento
 language: pt-br
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://walternascimento.com.br
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -52,7 +52,7 @@ tag_map:
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
-date_format: YYYY-MM-DD
+date_format: DD/MM/YYYY
 time_format: HH:mm:ss
 
 # Pagination
@@ -70,4 +70,3 @@ theme: spfk
 deploy:
   type: git
   repository: git@github.com:walternascimentobarroso/walternascimentobarroso.github.io.git
-  branch: master
