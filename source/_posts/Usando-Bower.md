@@ -6,7 +6,7 @@ tags:
 Bower veio para melhorar sua vida, sempre que iniciamos um projeto novo ou damos continuidade em um antigo, vem as dependecias, e la vai ter que ir de site em site baixando todas as bibliotecas que queremos
 <!-- more -->
 Mas com o bower nossos problemas acabaram
-para instala-lo primeiro você deve ter o  [nodejs](/2016/02/01/Instalando-NodeJs/") instalado, depois é só instalar o bower
+para instala-lo primeiro você deve ter o  [nodejs](/2016/02/01/Instalando-NodeJs/ "Instalando NodeJs") instalado, depois é só instalar o bower
 ```
 npm install -g bower
 ```
