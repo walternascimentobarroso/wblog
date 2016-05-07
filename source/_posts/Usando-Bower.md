@@ -1,12 +1,14 @@
 title: Usando Bower
-date: 2016-02-03 15:11:38
+date: 2016-04-03 15:11:38
 tags:
+- Development
+- Front End
 ---
 ![logo-nodejs](http://bower.io/apple-touch-icon.png)
 Bower veio para melhorar sua vida, sempre que iniciamos um projeto novo ou damos continuidade em um antigo, vem as dependecias, e la vai ter que ir de site em site baixando todas as bibliotecas que queremos
 <!-- more -->
 Mas com o bower nossos problemas acabaram
-para instala-lo primeiro você deve ter o  [nodejs](/2016/02/01/Instalando-NodeJs/ "Instalando NodeJs") instalado, depois é só instalar o bower
+para instala-lo primeiro você deve ter o  [nodejs](/2016/04/01/Instalando-NodeJs/ "Instalando NodeJs") instalado, depois é só instalar o bower
 ```
 npm install -g bower
 ```
@@ -17,7 +19,7 @@ bower init
 ```
 Você ira responder um questionario e depois será criado um arquivo com o nome `bower.json`
 
-esse arquivo (bower.json) é o que vc ira enviar para seu projeto e deixar a pasta bower_components (que você poderar mudar  o nome se quiser) não versionada deminuindo o tamanho do projeto
+esse arquivo (bower.json) é o que vc ira enviar para seu projeto e deixar a pasta bower_components (que você poderá mudar  o nome se quiser) não versionada deminuindo o tamanho do projeto
 
 para instalar uma dependecia vc so precisa colocar o nome do pacote
 ```

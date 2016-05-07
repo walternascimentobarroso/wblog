@@ -1,6 +1,8 @@
 title: Criando um CSS melhor com Sass
-date: 2016-02-04 09:44:53
+date: 2016-04-04 09:44:53
 tags:
+- Development
+- Front End
 ---
 Escrever CSS é algo simples e fácil, principalmente no começo de qualquer projeto, mas conforme os dias vão passando as linhas de códigos aumentando fica cada vez mais dificil organizar o código css, e para facilitar nossa vida surgiu os pré-processadores
 <!--more-->

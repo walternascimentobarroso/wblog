@@ -1,12 +1,12 @@
-title: Brincando com o Angular Material
+title: Playing with Angular Material
 date: 2016-04-14 10:09:39
 tags:
  - Front End
  - Development
 ---
-[Angular Material](https://material.angularjs.org/) é uma implementação da referência do Google material, é um projeto com diversos componentes testados e prontos para uso.
+[Angular Material](https://material.angularjs.org/) is an implementation of Google reference material, is a project with many tested and ready to use components.
 <!--more-->
-Indo direto ao assunto, para começar você pode criar uma pagina `index.html`, com o seguinte conteudo (Copiado do site do [Angular Material](https://material.angularjs.org/)):
+Going straight to the point to begin with you can create a page `index.html`, with the following content (site Copied from [Angular Material](https://material.angularjs.org/)):
 ```
 <html lang="en" >
 <head>
@@ -39,6 +39,6 @@ Indo direto ao assunto, para começar você pode criar uma pagina `index.html`, 
 </body>
 </html>
 ```
-Nesse caso está sendo utilizado tudo via CDN do google, mas se você quiser poderá usar o  [bower](/2016/04/03/Usando-Bower/ "Usando o Bower") para baixar todas as dependencias
+In this case it is being used all CDN via google, but if you want you can use the [Bower](/2016/04/03/Using-Bower/ "Using Bower") to download all dependencies
 
-Após isso basta você acessar o site do [angular material](https://material.angularjs.org/) na parte de demos e usar o exemplo que quiser, é uma ferramenta bem simples e para usar é necessario poucas linhas de codigos, qualquer duvida veja a documentação
+After that you can simply access the site [angular materials](https://material.angularjs.org/) on the demos and use the example you want is a simple tool to use and is necessary few lines of codes, no doubt see the documentation

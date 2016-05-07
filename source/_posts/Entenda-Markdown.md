@@ -1,6 +1,8 @@
 title: Entenda Markdown
-date: 2016-02-06 09:46:55
+date: 2016-04-06 09:46:55
 tags:
+- Knowledge
+- Development
 ---
 Markdown é uma linguagem simples de marcação originalmente criada por John Gruber e Aaron Swartz. Markdown converte seu texto em XHTML válido. [Wikipedia](https://pt.wikipedia.org/wiki/Markdown "Descrição da wikipedia")
 <!--more-->

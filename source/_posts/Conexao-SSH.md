@@ -1,6 +1,7 @@
 title: Conexão SSH
-date: 2016-02-02 09:42:23
+date: 2016-04-02 09:42:23
 tags:
+- Development
 ---
 Todo desenvolvedor precisa saber pelo menos se conectar no servidor via ssh, claro não é facil decorar varias formas de programa e linguagens e depois de anos tentar lembrar um comando simples que é se conectar via ssh em uma maquina, para facilitar estou deixando salvo o comando principal aqui neste post.
 <!-- more -->

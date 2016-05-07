@@ -1,6 +1,7 @@
 title: Instalando NodeJs
-date: 2016-02-01 15:24:33
+date: 2016-04-01 15:24:33
 tags:
+- Development
 ---
 ![logo-nodejs](https://nodejs.org/static/apple-touch-icon.png)
 Instalar  o node é bem fácil basta acessar o [site oficial](https://nodejs.org/en/ "Site oficial do nodejs") e baixar o pacote e pronto.
