@@ -70,3 +70,4 @@ theme: flexy
 deploy:
   type: git
   repository: git@github.com:walternascimentobarroso/walternascimentobarroso.github.io.git
+  branch: BRANCH
