@@ -1,0 +1,99 @@
+Compreendendo o Ionic 2: Classe
+
+No Ionic 2, as classes estão no  centro de tudo graças ao ES6.
+Tudo agora é uma classe.
+para alguem que vem de outras linguagens orientada a objetos, eles se setem em casa com as classe
+para qualquer um que vem do javascript, pode haver algum bagunça que precisa acontecer para chegar ao ponto de conforto com este novo paradigma.
+Neste artigo, vamos dar uma olhada no basico de escrever classes.
+
+Ionic 1.0 Equivalente
+
+Embora não haja um paralelo óbvio entre classes em Ionic 2 e algo em Ionic 1, você pode imaginar que a qualquer momento em Ionic 1 você chamou angular.factory ou angular.controller ou algo semelhante, você estava criando algum tipo de objeto ou coisa . Em 2.0, estamos criando essas coisas como classes e, em seguida, decorá-los com o tipo de coisa que eles estão usando decoradores.
+
+Sintaxe basica da classe
+
+A sintaxe básica de uma classe é a seguinte:
+class myClassName {}
+Super simples certo?
+
+Construtor
+
+O construtor e uma funcao que é chamada imediatamente quando uma nova instancia de uma classe é criada.
+Vejamos o seguinte exemplo:
+
+class myClassName {
+	constructor(name: string){
+		console.log("Hello " + name)
+	}
+}
+
+var testInstance = new myClassName("Andrew");
+
+No exemplo acima, assim que estou criando uma nova instância de myClassName e passando a string Andrew, a função de construtor é chamada com Andrew passada para o parâmetro de nome
+Agora você pode estar se perguntando o que está acontecendo com o nome misterioso: sintaxe string. Isso é TypeScript! Eu não vou me aprofundar nele neste post, mas é algo que você pode usar para desenvolver o seu aplicativo e é incrível.
+
+Methods
+
+Para dar nossos métodos de classe, é super simples!
+
+class myClassName {
+	constructor(name: string){
+		
+	}
+	
+	sayHello(){
+		console.log("Hello");
+	}
+}
+
+Properties
+
+Adicionar propriedades é um pouco estranho se você estiver vindo de uma linguagem baseada em classe diferente. As propriedades de classe só podem ser criadas dentro de um dos métodos classes. Não há nenhuma maneira de criar propriedades na declaração da própria classe(http://stackoverflow.com/questions/22528967/es6-class-variable-alternatives). No entanto, ele é suportado em TypeScript.
+
+Por exemplo, o seguinte NÃO TRABALHARÁ com apenas ES6, mas vai funcionar com o TypeScript.
+
+class myClassName {
+	name: ""
+	constructor(name: string){
+		this.name = name;
+	}
+}
+
+Em vez disso, para ES6, você iria querer simplesmente declará-lo no construtor.
+
+class myClassName {
+	constructor(name: string){
+		this.name = name;
+	}
+}
+
+Decorators
+
+entao o que e um decorator? Bem, vamos olhar para um exemplo de um.
+
+@App({
+	templateUrl: 'app/app.html'
+})
+class MyApp {
+	//etc
+}
+
+Um decorador descreve o que uma classe é ou faz. Dá-lhe funcionalidade executando-o através de uma função. Neste exemplo, estamos criando uma classe chamada MyApp e adicionando o decorador @App a ele. Então, estamos dizendo que esta classe é um aplicativo. Também estamos passando alguns detalhes sobre nossa nova classe de aplicativo, dizendo onde encontrar o templateUrl. Alguns exemplos de decoradores em Ionic 2 incluem:
+* @App - A principal classe central do nosso aplicativo (Leia mais(http://mcgivery.com/understanding-ionic-2-app/))
+* @Page – A view/page
+* @Pipe - Uma substituição de filtros do Ionic 1.0. Utilizado para formatar dados.
+* @Injectable - Uma classe genérica injetável (Pense: Fábricas em Ionic 1.0)
+* @Directive - Quase idêntico a diretivas em Ionic 2.0
+* @Component - Uma diretiva com um modelo (semelhante ao uso da transclusão em diretivas no Ionic 1.0)
+
+Conclusão
+
+As classes estão no coração de Ionic 2 com ES6. Tudo é uma classe e as aulas são tudo. Questões? Sinta-se livre para deixá-los abaixo nos comentários!
+
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+
+NOTA: Alfa
+
+Lembre-se de que o Ionic 2 está em alfa e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
