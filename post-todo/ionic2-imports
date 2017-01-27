@@ -1,0 +1,74 @@
+Compreendendo Ionic 2: imports
+
+Um conceito muito importante em Ionic 1.0 foi o conceito de módulos. Isso permitiu que você criasse um aplicativo de forma muito modular, tornando seu código organizado, reutilizável, lógico, fácil de entender, escalável e muito mais. Também permitiu que o sistema de injeção de dependência do Angular ficasse mágico.
+
+Em Ionic 2, chegamos a usar a magia de importações ES6. Este é um sistema mais direto de classes de marcação como exportável e uma sintaxe direta de importação dessas classes para outras partes de seu aplicativo.
+
+Neste artigo vamos dar uma rápida olhada em algumas das capacidades do novo sistema de importação
+
+Ionic 1.0 Equivalent
+
+Como mencionado acima, se você está vindo de ionic 1.0, você pode estar familiarizado com módulos e injeção de dependência (Se você não estiver familiarizado com módulos em Ionic 1, você pode querer ler o meu post sobre o tópico). O novo sistema na versão 2 será muito familiar e confortável se você trabalhou em qualquer linguagem do lado do servidor.
+
+sintaxe basica import
+
+a sintaxe basica de uma importacao e a seguinte
+
+import {thing} from 'path/to/thing';
+
+Coisa é o nome da classe que você gostaria de importar. 'Path / to / thing' é o caminho para o arquivo que contém a classe. No caminho para o arquivo, basta colocar o nome de um arquivo JavaScript pressupõe que você está se referindo à pasta atual. Adicionar "./" ao início do caminho indica que o caminho é relativo para a pasta atual. "../" denota para ir até uma pasta.
+
+Exemplos
+
+Por exemplo, vamos supor que nosso código está em um arquivo app.js na pasta / app. Nossa estrutura parece algo como isto:
+/www
+	/app
+		/about
+			about.js
+		/data
+			service.js
+		app.js
+		specialscript.js
+	index.html	
+Usando a estrutura acima, se quiséssemos carregar em specialscript.js para app.js, usaríamos o nome do arquivo precedido por ./ pois ele vive na mesma pasta (/ app).
+
+import {specialClass} from './specialscript';
+
+Você notará que não incluímos o .js no caminho, pois não é necessário.
+
+Em seguida, queremos importar about.js para o nosso arquivo app.js. Para isso, precisamos usar um caminho relativo na pasta about.
+
+import {specialClass} from 'specialscript';
+import {AboutPage} from './about/about';
+
+Finalmente, queremos importar service.js para about.js. Para isso, precisamos ir até uma pasta, e para a pasta de dados.
+
+import {dataService} from '../data/service';
+
+Aliases
+
+Vamos fingir que temos uma classe com um super, feio nome longo e nós realmente não queremos usar esse nome. Boas notícias! Podemos alias-lo e chamá-lo algo mais em nossa importação.
+
+import { HelloThisClassNameIsWayTooLongCauseSomeoneFeltLikeIt AS TerribleClass } from 'badClasses'
+
+Multipla classes
+
+Outra coisa que podemos fazer é ter várias importações a partir do mesmo arquivo. Para fazer isso, apenas vírgula separar os nomes das classes em nossa importação.
+
+import {dataService, peopleService, otherService} from '../data/service';
+
+Exports
+
+Há uma pergunta restante. Como posso marcar uma classe como importável? Fácil! Marque-o com a exportação de palavras-chave.
+
+export class MyClass {}
+
+Conclusão
+
+Esperemos que agora as importações são totalmente claras e diretas, especialmente se você está vindo de Ionic 1.0 e pode ver o paralelo entre os velhos módulos eo novo sistema de importação. Questões? Sinta-se livre para deixá-los abaixo nos comentários!
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+NOTA: Alfa
+
+Lembre-se de que o Ionic 2 está em alfa e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
