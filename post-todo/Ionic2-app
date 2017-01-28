@@ -1,0 +1,110 @@
+Compreendendo Ionic 2: @App
+
+
+Conforme discutido em Understanding Ionic 2: Classes, as classes estão no centro de tudo graças ao ES6. Essas classes usam uma nova sintaxe chamada decoradores para especificar qual é o propósito de cada classe. Um desses decoradores, @App, é usado para designar uma classe como o componente principal de seu aplicativo.
+
+Neste artigo, vamos discutir o decorador @App e como usá-lo.
+
+Ionic 1.0 Equivalent
+
+Existe um paralelo muito claro no Ionic 1.0: ng-app. Em 1.0, você adicionaria o atributo ng-app a um elemento (normalmente corpo), passaria um nome para esse atributo e criaria um módulo com esse nome.
+
+<body ng-app="app">
+
+angular.module('app', ['ionic']);
+
+Sintaxe @App básica
+
+No nosso arquivo index.html, usaremos a nova tag ion-app.
+
+<ion-app></ion-app>
+
+Em seguida, no nosso arquivo app.js, criaremos uma classe e a marcaremos como nossa classe de aplicativo.
+
+import {App, IonicApp, Config, Platform} from 'ionic/ionic';
+
+@App({
+
+})
+Class MyApp {
+
+}}
+
+
+Basic Decorator Opções
+
+A primeira coisa que você deseja fornecer ao seu decorador @App, é um templateUrl. Este é um arquivo html que é colocado na tag ión-app. Este é o modelo html do seu componente @App.
+
+import {App, IonicApp, Config, Platform} from 'ionic/ionic';
+
+@App({
+	templateUrl: 'app/app.html',
+})
+Class MyApp {
+
+}}
+
+A próxima coisa que você pode passar é um objeto de configuração que tem um monte de opções para realmente configurar o seu aplicativo iônico. Algumas coisas que você pode configurar incluem ícones, animações, posicionamento de tabulação, transições de página e muito mais. Para obter mais informações, consulte o Official Ionic 2 docs.
+
+import {App, IonicApp, Config, Platform} from 'ionic/ionic';
+
+@App({
+	templateUrl: 'app/app.html',
+	config: {
+		backButtonText: 'Go Back',
+		iconMode: 'ios',
+		modalEnter: 'modal-slide-in',
+		modalLeave: 'modal-slide-out',
+		tabbarPlacement: 'bottom',
+		pageTransition: 'ios',
+	}
+})
+
+App Class Constructor
+
+Agora, na nossa classe MyApp, devemos adicionar um construtor.
+
+import {App, IonicApp, Config, Platform} from 'ionic/ionic';
+
+@App({
+	templateUrl: 'app/app.html',
+})
+Class MyApp {
+	constructor(app: IonicApp, config: Config, platform: Platform) {
+		this.app = app;
+		this.menuType = config.get('menuType');
+
+		platform.ready().then(() => {
+			// Do any necessary cordova or native calls here now that the platform is ready
+		});
+	}
+}}
+
+Há algumas coisas acontecendo aqui. Primeiro, estamos puxando em nosso construtor uma referência ao nosso próprio IonicApp via app e atribuindo-o a uma propriedade de classe. Isso nos permite acessar coisas como this.app.getComponent ('leftMenu'). Close (); Para fechar menus e tal.
+
+Em segundo lugar, estamos puxando em uma referência à nossa configuração via config. Isso nos permite consultar nossa configuração a qualquer momento.
+
+Por último mas não menos importante, estamos puxando em uma referência para a plataforma que nos permite executar o código quando a plataforma cordova está tudo pronto. Que seria um bom momento para inicializar qualquer plugins necessários. Isso pode parecer um pouco familiar para você se você fez qualquer trabalho com plugins na versão 1.
+
+Get/Set Config
+
+Como mencionado acima, usando a configuração, podemos obter qualquer valor de configuração para o nosso aplicativo.
+var menuType = config.get('menuType'); //Default to "reveal" on iOS
+Também podemos definir valores de configuração.
+var menuType = config.set('ios','menuType','overlay'); //Set to "overlay" on iOS
+Para o primeiro parâmetro, especificamos ios como a plataforma. Se deixarmos esse parâmetro em branco, ele se aplicará a TODAS as plataformas.
+var menuType = config.set('','menuType','overlay'); //Set to "overlay" on all platforms
+
+Para obter uma lista completa de valores de configuração, consulte os Documentos do Ionic.
+
+Observação: você também pode adicionar valores personalizados para a configuração para pesquisa em um tempo posterior usando a mesma API e sintaxe.
+Conclusão
+
+Como visto neste artigo, o @App é o decorador básico e primeiro você precisará usar no processo de fazer um aplicativo iônico. A classe decorada @App é o componente central do seu aplicativo.
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+NOTA: Alfa
+
+Lembre-se de que o Ionic 2 está em alfa e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
+
