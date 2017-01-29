@@ -1,0 +1,147 @@
+Compreendendo Ionic 2: @Page
+
+Conforme discutido em Understanding Ionic 2: Classes, as classes estão no centro de tudo graças ao ES6. Essas classes usam uma nova sintaxe chamada decoradores para especificar qual é o propósito de cada classe. Um desses decoradores, @Page, representa uma visualização em um aplicativo iônico. Novas instâncias dessas classes são criadas à medida que são necessárias em seu aplicativo.
+
+Neste artigo, discutiremos o decorador @Page e como usá-lo.
+
+Ionic 1.0 Equivalente
+
+Dependendo de como você envolve sua mente em torno dele, @Page poderia ser comparado a um par de conceitos diferentes em 1.0, mas o mais simples é provavelmente uma mistura de estados e controladores onde o próprio decorador é semelhante a um estado ea classe é semelhante a um controlador . Assumindo que você escreveu um controlador por visualização em 1.0 e usou o controlador para alimentar dados para a visualização, um decorador @Page e sua classe são muito semelhantes. A principal diferença será que em 2.0, em vez de emparelhar um modelo e um controlador no estado do roteador como em 1.0, o modelo é anexado no decorador @Page diretamente.
+
+Sintaxe @Page básica
+
+A sintaxe básica de um @Page é a seguinte:
+
+import {Page} from 'ionic/ionic';
+
+@Page({
+	templateUrl: "templateName.html"
+})
+export class PageName(){
+	constructor(){
+		
+	}
+}
+
+É muito semelhante ao decorador @App que leva um templateUrl que aponta para um arquivo html. De acordo com o Ionic Docs, "As páginas têm seu conteúdo automaticamente envolvido em exibição de iônicos, portanto, embora você possa ver essas tags se você inspecionar sua marcação, não é necessário incluí-las em seus modelos".
+
+Exemplo: Olá Mundo
+
+Vejamos um exemplo básico de um "Hello World" @Page.
+
+import {Page} from 'ionic/ionic';
+
+@Page({
+	templateUrl: "Main/Main.html"
+})
+export class Main(){
+	constructor(){
+		
+	}
+}
+
+Neste exemplo, estamos criando uma página principal e usando um modelo localizado em Main / Main.html. Nosso molde apenas dirá as palavras "olá! Mundo!":
+
+Hello World!
+
+Exemplo: Hello Name
+
+Vamos tentar usar alguns dados de nossa classe em nosso modelo. Definiremos uma propriedade de nome em nossa classe.
+
+import {Page} from 'ionic/ionic';
+
+@Page({
+	templateUrl: "Main/Main.html"
+})
+export class Main(){
+	constructor(){
+		this.name = "Andrew";
+	}
+}
+
+Isso ficará muito familiar se você usou a sintaxe controllerAs na versão 1.0. Se você não, this.name é aproximadamente equivalente a $ scope.name. Agora podemos usar esta propriedade em nosso modelo:
+Hello {{name}}!
+
+Este será compilado para "Olá Andrew!".
+
+Exemplo: Olá Método
+
+Para o nosso exemplo final, vamos criar um método em nossa @Page que altera o valor de this.name. Este método será chamado em um clique de botão.
+
+import {Page} from 'ionic/ionic';
+
+@Page({
+	templateUrl: "Main/Main.html"
+})
+export class Main(){
+	constructor(){
+		this.name = "Andrew";
+	}
+	
+	changeName(name){
+		this.name = name;
+	}
+}
+
+Em nosso modelo, adicionaremos três botões para chamar a função Alterar Nome quando eles são clicados:
+
+<p>Hello {{name}}!</p>
+
+<strong>Change Name To:</strong>
+<button (click)="changeName('Andrew')">Change to Andrew</button>
+<button (click)="changeName('Brandy')">Change to Brandy</button>
+<button (click)="changeName('Katie')">Change to Katie</button>
+
+Quando cada um desses botões são pressionados, eles alterarão o valor da propriedade de nome eo modelo será atualizado. Por exemplo, clicar no segundo botão irá alterar a saída de Olá Andrew! A Olá Brandy!
+
+Exemplo: Olá Modal
+
+Em Ionic 1.0, um modal foi construído a partir de um modelo que era uma entidade totalmente separada. Em 2.0, ANY @Page pode ser um modal simplesmente passando-o para o método Modal.open. Como exemplo, vamos criar uma página chamada PopupPage.
+
+import {Page} from 'ionic/ionic';
+
+@Page({
+	templateUrl: 'Popup/Popup.html',
+})
+export class PopupPage {
+	constructor(){
+		
+	}
+}
+
+Nada especial aqui, apenas uma página normal. Para o exemplo, vamos dar-lhe um modelo muito simples.
+
+Hello from PopupPage!
+
+Conforme a documentação, precisamos incluir o componente de sobreposição de íons em algum lugar em nosso aplicativo uma vez, geralmente em nosso modelo de raiz app.html. (Isso seria no modelo do nosso @App)
+
+<ion-overlay></ion-overlay>
+
+Em seguida, vamos criar uma segunda página, MainPage que contém um método que quando chamado mostra nossa PopupPage em um modal.
+
+import {Page, Modal} from 'ionic/ionic';
+import {PopupPage} from 'Popup/Popup';
+
+@Page({
+	templateUrl: 'Main/Main.html',
+})
+export class MainPage {
+	constructor(modal: Modal){
+		this.modal = modal;
+	}
+	
+	openPopup(){
+		this.modal.open(PopupPage);
+	}
+}
+
+… e é isso! Tudo o que tínhamos que fazer era usar modal.open e passar nossa PopupPage para ele como um parâmetro.
+Conclusão
+
+@Page é o bloco de construção do seu aplicativo que é usado para criar cada uma das visualizações de seu aplicativo, incluindo o fornecimento dessa exibição com dados. Questões? Deixe-os abaixo!
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+NOTA: Alfa
+
+Lembre-se de que o Ionic 2 está em alfa e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
