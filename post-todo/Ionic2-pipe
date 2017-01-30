@@ -1,0 +1,145 @@
+Compreendendo Ionic 2: @Pipe
+Por Andrew McGivery | Publicado em: Uncategorized | 2
+
+Conforme discutido em Understanding Ionic 2: Classes, as classes estão no centro de tudo graças ao ES6. Essas classes usam uma nova sintaxe chamada decoradores para especificar qual é o propósito de cada classe. Um desses decoradores, @Pipe, é uma classe cujo único propósito é usar uma função para transformar um dado valor ou conjunto de valores.
+
+Neste artigo, vamos discutir o decorador @Pipe e como usá-lo.
+Ionic 1.0 Equivalente
+
+@Pipe é quase uma porta reta de filtros de Angular 1.0. A sintaxe de modelo inline é quase idêntica e realmente a única diferença é a função de processamento que está sendo envolvida em uma classe para @Pipe.
+
+sintaxe basica @pipe
+
+A sintaxe básica de um @Pipe é a seguinte:
+
+import {Pipe} from 'angular2/core'
+
+@Pipe({
+	name: 'myPipe'
+})
+export class MyPipeClass{
+	transform(value, args) {
+		return value;
+	}
+}
+
+No exemplo acima, name é o nome que você chamará seu @Pipe com em um modelo. Transform é a função que será usada para processar cada item que é passado em uma matriz. Args é uma matriz de argumentos opcionalmente passados. A sintaxe inline seria semelhante à seguinte:
+
+value | myPipe:args[0]:args[1]
+
+E precisamos nos certificar de que informamos o @Page onde queremos usar o @Pipe que ele existe:
+
+import {MyPipeClass} from 'pipes/myPipe'
+
+@Page({
+	pipes: [MyPipeClass]
+})
+export class MyPage { }
+
+NOTA: Este é o nome da classe @Pipe (MyPipeClass), NÃO a propriedade de nome do decorador (myPipe). Observe também que precisamos importar o pipe para o arquivo onde o usaremos.
+
+Exemplo: Olá Mundo
+
+Vamos olhar para um exemplo muito simples. Vamos criar um @Pipe onde dado um nome, ele exibe "Olá _____!" Com o passado no nome.
+
+import {Pipe} from 'angular2/core'
+
+@Pipe({
+	name: 'helloWorld'
+})
+export class HelloWorld {
+	transform(value) {
+		return "Hello " + value + "!";
+	}
+}
+
+Aqui estamos esperando para ter uma seqüência de caracteres passou em valor. Vamos olhar para o @Page:
+
+import {HelloWorld} from 'pipes/HelloWorld'
+
+@Page({
+	templateUrl: 'myPage/myPage.html',
+	pipes: [HelloWorld]
+})
+export class MyPage {
+	constructor(){
+		this.name = "Andrew";
+	}
+}
+
+E, finalmente, o modelo:
+
+{{name | helloWorld}}
+
+Neste exemplo, estaremos passando
+
+Andrew
+
+No @Pipe ea saída será:
+
+Hello Andrew!
+
+Exemplo: adicionando
+
+Vejamos outro exemplo. Vamos criar um @Pipe onde dado um inteiro ou uma matriz de inteiros, ele irá adicionar outro inteiro dado a cada valor.
+
+import {Pipe} from 'angular2/core'
+
+@Pipe({
+	name: 'addInt'
+})
+export class AddInt {
+	transform(value, args) {
+		return value + args[0];
+	}
+}
+
+Aqui, nós estamos esperando que teremos um inteiro passado em valor e outro inteiro passado em args [0]. Vamos olhar para o @Page:
+
+import {AddInt} from 'pipes/AddInt'
+
+@Page({
+	templateUrl: 'myPage/myPage.html',
+	pipes: [AddInt]
+})
+export class MyPage {
+	constructor(){
+		this.myIntArray = [1,3,7,15,31];
+		this.mySingleInt = 40;
+	}
+}
+
+E, finalmente, o modelo:
+
+The meaning of life: {{mySingleInt | addInt:2}}
+
+<ul>
+<li *ngFor="#myInt of myIntArray">
+{{myInt | addInt:1}}
+</li>
+</ul>
+
+Neste exemplo, estamos passando 2 para a primeira chamada para o @Pipe (adicionando 40 + 2) e passando 1 para a segunda chamada para o @Pipe resultando em adicionar 1 a cada item na matriz. A saída do acima seria:
+
+The meaning of life: 42
+
+<ul>
+	<li>2</li>
+	<li>4</li>
+	<li>8</li>
+	<li>16</li>
+	<li>32</li>
+</ul>
+
+Conclusão
+
+As classes @Pipe são uma ótima maneira de processar um determinado valor ou conjunto de valores em seu aplicativo rapidamente. Questões? Deixe-os nos comentários abaixo!
+Quero mais?
+
+Quer ler mais e ver mais exemplos usando @Pipe? Confira Como usar Pipes para manipular dados no Ionic 2 no blog de Joshua Morony.
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+NOTA: Beta
+
+Lembre-se de que o Ionic 2 está em versão beta e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
