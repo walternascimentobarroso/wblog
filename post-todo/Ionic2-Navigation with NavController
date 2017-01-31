@@ -1,0 +1,237 @@
+Entendendo Ionic 2: Navegação com NavController
+Por Andrew McGivery | Publicado em: Uncategorized | 1
+
+Em Understanding Ionic 2: @Page, aprendemos a criar exibições usando o decorador @Page e anexamos um modelo à classe. Neste artigo, aprenderemos a navegar entre essas páginas usando o NavController ea pilha de navegação.
+
+Ionic 1.0 Equivalente
+
+Em 1.0, havia o conceito de estados e um roteador. Isso era bastante simples e fácil de usar para aplicativos simples, mas muito rapidamente se tornou uma confusão complicada quando havia estados abstratos e estados aninhados envolvidos. Houve situações em que você teve que reformular completamente o seu aplicativo para obter a navegação desejada e funcionalidade.
+
+Em 2.0, usamos a idéia de uma pilha de navegação.
+
+Pilha de navegação
+
+Uma pilha de navegação é exatamente o que parece, uma pilha de navegação. Cada item na pilha é uma visualização anterior em que você esteve. Pense nisso como o seu histórico do navegador: cada vez que você visita uma página, uma nova página é adicionada à sua lista de histórico. Quando você apertar o botão Voltar, você vai para o item anterior em seu histórico.
+
+A pilha de navegação do Ionic é armazenada e controlada pela classe NavController. Ao injetar essa classe em um @Page, você pode manipular a pilha de navegação. Adicionar itens à pilha usa um método push e remover itens de uma pilha usa um método pop, muito semelhante a uma matriz em javascript.
+
+Para navegar de uma visão para outra, nós empurramos uma nova página para a pilha de navegação. Para voltar uma página, nós estalaremos a vista fora da parte superior da pilha. As instâncias de um @Page são criadas quando são adicionadas à pilha de navegação. Quando um @Page é adicionado à pilha de navegação, o NavController compila-lo e anima-lo em vista.
+
+Uso básico de envio
+
+Antes de podermos usar o NavController, precisaremos importá-lo.
+
+import {Page, NavController} from 'ionic-angular';
+
+Em seguida, nós o injetaremos em nossa @Page e atribuiremos a uma propriedade.
+
+import {Page, NavController} from 'ionic-angular';
+
+@Page({
+	templateUrl: "build/pages/Main/Main.html"
+})
+export class MainPage(){
+	constructor(nav: NavController){
+		this.nav = nav;
+	}
+}
+
+Agora, podemos chamar propriedades no nav, nossa instância de NavController. Por exemplo, digamos que desejamos navegar da nossa exibição principal para a nossa exibição Sobre, precisaremos começar importando essa classe @Page.
+
+import {Page, NavController} from 'ionic-angular';
+import {AboutPage} from 'About/About'
+
+@Page({
+	templateUrl: "build/pages/Main/Main.html"
+})
+export class MainPage(){
+	constructor(nav: NavController){
+		this.nav = nav;
+	}
+}
+
+Em seguida, vamos criar um método em nossa página chamada goToAbout que podemos chamar de nosso modelo. Este método irá empurrar o AboutPage para a pilha.
+
+import {Page, NavController} from 'ionic-angular';
+import {AboutPage} from 'About/About'
+
+@Page({
+	templateUrl: "build/pages/Main/Main.html"
+})
+export class MainPage(){
+	constructor(nav: NavController){
+		this.nav = nav;
+	}
+	
+	goToAbout(){
+		this.nav.push(AboutPage);
+	}
+}
+
+Em nosso modelo, Main.html, teremos um botão que chamará este método quando pressionado.
+
+<button (click)="goToAbout()">About</button>
+
+Para resumir, quando esse botão é pressionado, ele chamará o método goToAbout, que empurra uma instância da classe AboutPage para a pilha de navegação, que é então compilada e animada na visualização.
+
+Passando dados
+
+Em muitos cenários temos dados em uma visão que precisamos passar para outra. Felizmente, o método push aceita um segundo parâmetro que é um objeto de dados para passar para o @Page passado para o primeiro parâmetro.
+
+this.nav.push(AboutPage,{
+	username: "andrewmcgivery",
+	blogger: true
+});
+
+Estes dados são então acessíveis no @Page pressionado via navParams que é semelhante a $ stateParams em 1.0.
+
+import {Page, NavParams} from 'ionic-angular';
+
+@Page({
+	templateUrl: 'build/pages/About/About.html',
+})
+export class AboutPage {
+	constructor(navParams: NavParams){
+		this.username = navParams.get("username"); // "andrewmcgivery"
+		this.blogger = navParams.get("blogger"); // true
+	}
+}
+
+Pop
+
+Pop é super simples de usar também. Como um exemplo, se quiséssemos criar uma função chamada goBack que volta quando pressionada em nosso AboutPage, poderíamos simplesmente chamar nav.pop ():
+
+import {Page, NavController} from 'ionic-angular';
+
+@Page({
+	templateUrl: 'build/pages/About/About.html',
+})
+export class AboutPage {
+	constructor(nav: NavController){
+		this.nav = nav;
+	}
+	
+	goBack(){
+		this.nav.pop();
+	}
+}
+
+Outros Métodos
+
+Há alguns métodos mais disponíveis no NavController, como inserir, remover, etc Sugiro ler o Documentos Oficial.
+
+Eventos do Ciclo de Vida
+
+Na versão 1.0, tivemos o conceito de eventos sendo disparados quando estávamos entrando e saindo da visão, entre outros. Na versão 2.0, temos um conjunto muito semelhante de eventos. Para lidar com um desses eventos, apenas precisamos dar à nossa classe @Page um método que corresponda ao evento. Por exemplo, se quisermos executar um evento quando o @Page for carregado, precisaremos dar à nossa página o método onPageLoaded:
+
+import {Page} from 'ionic-angular';
+
+@Page({
+	templateUrl: 'build/pages/About/About.html',
+})
+export class AboutPage {
+	onPageLoaded(){
+		console.log("Page Loaded!");
+	}
+}
+
+Podemos ter um conjunto de manipuladores para uma variedade de eventos, incluindo, em seguida, a página está prestes a ser inserido, quando a página está saindo, etc Mais uma vez, gostaria de sugerir a leitura do Official Docs.
+
+Exemplo: Detalhes mestre
+
+Como abordado na minha versão 1 tutoriais Ionic: Master Detail Pattern e Hello Master Detalhe: O seu quarto aplicativo Ionic Framework, o padrão de detalhe mestre é um padrão muito comum em software onde você tem uma lista mestra de dados e quando um item dessa lista É selecionado, o usuário é apresentado com detalhes sobre esse item.
+
+No Ionic 2.0, graças à capacidade de transmitir dados entre visualizações, isso se torna muito fácil de realizar. Como exemplo, vamos criar um MasterPage e um DetailsPage. O MasterPage conterá uma lista de pessoas. Quando um desses itens de lista é selecionado, o MasterPage irá empurrar o DetailsPage para a pilha de navegação, passando os detalhes do item de lista que foi selecionado.
+
+Vamos começar com a nossa classe MasterPage. Para o nosso exemplo, teremos um array de objetos chamados hard-codificados. Também teremos um método goToDetails que empurra a classe DetailsPage para a pilha de navegação e passa ao longo de um objeto pessoa.
+
+import {Page, NavController} from 'ionic-angular';
+import {DetailsPage} from 'Details/Details'
+
+@Page({
+	templateUrl: 'build/pages/Master/Master.html',
+})
+export class MasterPage {
+	constructor(nav: NavController){
+		this.nav = nav;
+		
+		//Hard-coded for Example
+		this.people = [
+			{
+				firstName: 'Andrew',
+				lastName: 'McGivery',
+				bio: "Developer @manulife | Jack of Many Trades | I blog about @ionicframework";
+			},
+			{
+				firstName: 'Brandy',
+				lastName: 'Carney',
+				bio: "SDK Developer at Ionic - @ionicframework. Developed @appcampio. ❤️ wine and animals.";
+			},
+			{
+				firstName: 'Mike',
+				lastName: 'Hartington ',
+				bio: "Ionic Developer Advocate. I trick people into thinking I can do code. GDE";
+			}
+		]
+	}
+	
+	goToDetails(person){
+		this.nav.push(DetailsPage, person);
+	}
+}
+
+Para o nosso modelo Master.html, vamos listar através da matriz de pessoas e para cada item vamos exibir um item de lista com o primeiro nome da pessoa e sobrenome. Quando o item da lista é pressionado, ele chamará o nosso método goToDetails e passará o objeto pessoa atual do nosso ngFor.
+
+<ul>
+	<li *ngFor="#person of people" (click)="goToDetails(person)">
+		{{person.firstName}} {{person.lastName}}
+	</li>
+</ul>
+
+Em nosso DetailsPage, vamos obter o objeto pessoa inteira usando navParams.data:
+
+import {Page, NavParams} from 'ionic-angular';
+
+@Page({
+	templateUrl: 'build/pages/Details/Details.html',
+})
+export class DetailsPage {
+	constructor(navParams: NavParams){
+		this.person = navParams.data; //Gets the person object
+	}
+}
+
+... e no modelo vamos mostrar o primeiro nome, sobrenome e bio:
+
+<h1>{{person.firstName}} {{person.lastName}}</h1>
+<p>{{person.bio}}</p>
+
+... e apenas como aquele, nós realizamos o teste padrão mestre do detalhe!
+
+NavPush e NavPop
+
+Se você preferir navegar entre cada @Page com uma sintaxe declarativa mais familiar, semelhante à que você pode fazer no V1 com ui-sref, você pode usar o NavPush para passar em uma instância de uma página.
+
+import {LoginPage} from 'login';
+@Page({
+  template: `<button [navPush]="pushPage"></button>`
+})
+class MyPage {
+  constructor(){
+    this.pushPage = LoginPage;
+  }
+}
+
+Consulte a documentação oficial (NavPush, NavPop) para obter mais detalhes.
+
+Conclusão
+
+Embora haja uma série de opções para a nova pilha de navegação e é em muitos aspectos um sistema muito diferente de 1.0, o sistema push / pop torna muitas coisas mais simples ao criar um aplicativo. Ele permite uma grande flexibilidade no fluxo de nosso aplicativo e muito controle em uma página por página. Questões? Deixe-os abaixo!
+
+Agradecimentos especiais
+
+Agradecimentos extremamente a Brandy Carney para revisar / editar este borne!
+
+NOTA: Beta
+
+Lembre-se de que o Ionic 2 está em versão beta e está sujeito a alterações a qualquer momento. Se este post torna-se impreciso a qualquer momento, sinta-se livre para deixar um comentário e vou fazer o meu melhor para atualizá-lo logo que puder.
